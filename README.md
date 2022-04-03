@@ -1,4 +1,4 @@
-# guessthenumber
+# Guess The Number
 
 ![Home Page](image/image1.png)
 ![Home Page](image/image2.png)
