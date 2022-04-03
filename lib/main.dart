@@ -83,15 +83,14 @@ class _HomePageState extends State<HomePage> {
                         "Try a number!",
                         style: TextStyle(color: Colors.grey, fontSize: 32),
                       ),
-                      padding: EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.only(top: 16),
                     ),
                     Container(
                       child: TextFormField(
                         controller: _controller,
-                        keyboardType:
-                        const TextInputType.numberWithOptions(decimal: false),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: false),
                         validator: (String? value) {
-                          _result = value!;
                           if (value == null || value.isEmpty) {
                             return "Please enter a number";
                           }
@@ -100,63 +99,61 @@ class _HomePageState extends State<HomePage> {
                             if (res == null) {
                               return "Please enter a number";
                             }
-                          } on Exception catch (_){
+                          } on Exception catch (_) {
                             return "Please enter a number";
                           }
                           return null;
                         },
                       ),
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                     ),
-                    Builder(
-                      builder: (context) {
-                        return ElevatedButton(
-                          onPressed: () {
-                            final bool? valid = Form.of(context)?.validate();
-                            if (valid != null && valid) {
-                              int res = int.parse(_controller.text);
-                              if (res == _number) {
-                                showDialog(
-                                    context: context,
-                                    builder: (ctx) => AlertDialog(
-                                      title: const Text("You guessed right"),
-                                      content: Text("It was $_number"),
-                                      actions: <Widget>[
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            _controller.clear();
-                                            _number = generate(0, 100);
-                                            setState(() {
-                                              _result = "";
-                                            });
-                                            Navigator.of(ctx).pop();
-                                          },
-                                          child: const Text("Try again"),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.of(ctx).pop();
-                                          },
-                                          child: const Text("OK"),
-                                        ),
-                                      ],
+                    Builder(builder: (context) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          final bool? valid = Form.of(context)?.validate();
+                          if (valid != null && valid) {
+                            int res = int.parse(_controller.text);
+                            if (res == _number) {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: const Text("You guessed right"),
+                                  content: Text("It was $_number"),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        _controller.clear();
+                                        _number = generate(0, 100);
+                                        setState(() {
+                                          _result = "";
+                                        });
+                                        Navigator.of(ctx).pop();
+                                      },
+                                      child: const Text("Try again"),
                                     ),
-                                );
-                              } else if (res < _number) {
-                                setState(() {
-                                  _result = "You tried ${res} \n Try higher";
-                                });
-                              } else if (res > _number) {
-                                setState(() {
-                                  _result = "You tried ${res} \n Try lower";
-                                });
-                              }
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                      },
+                                      child: const Text("OK"),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else if (res < _number) {
+                              setState(() {
+                                _result = "You tried ${res} \n Try higher";
+                              });
+                            } else if (res > _number) {
+                              setState(() {
+                                _result = "You tried ${res} \n Try lower";
+                              });
                             }
-                          },
-                          child: Text("Guess"),
-                        );
-                      }
-                    )
+                          }
+                        },
+                        child: const Text("Guess"),
+                      );
+                    })
                   ],
                 ),
               ),
